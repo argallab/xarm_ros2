@@ -224,30 +224,31 @@ def launch_setup(context, *args, **kwargs):
                     robot_description_parameters,
                 ],
                 # extra_arguments=[{'use_intra_process_comms': True}],
-            ),
-            ComposableNode(
-                package='xarm_moveit_servo',
-                plugin='xarm_moveit_servo::JoyToServoPub',
-                name='joy_to_servo_node',
-                parameters=[
-                    servo_params,
-                    {
-                        'dof': dof, 
-                        'ros_queue_size': 10,
-                        'joystick_type': joystick_type,
-                    },
-                ],
-                # extra_arguments=[{'use_intra_process_comms': True}],
-            ),
-            ComposableNode(
-                package='joy',
-                plugin='joy::Joy',
-                name='joy_node',
-                parameters=[
-                    # {'autorepeat_rate': 50.0},
-                ],
-                # extra_arguments=[{'use_intra_process_comms': True}],
-            ),
+            )
+            # ,
+            # ComposableNode(
+            #     package='xarm_moveit_servo',
+            #     plugin='xarm_moveit_servo::JoyToServoPub',
+            #     name='joy_to_servo_node',
+            #     parameters=[
+            #         servo_params,
+            #         {
+            #             'dof': dof, 
+            #             'ros_queue_size': 10,
+            #             'joystick_type': joystick_type,
+            #         },
+            #     ],
+            #     # extra_arguments=[{'use_intra_process_comms': True}],
+            # ),
+            # ComposableNode(
+            #     package='joy',
+            #     plugin='joy::Joy',
+            #     name='joy_node',
+            #     parameters=[
+            #         # {'autorepeat_rate': 50.0},
+            #     ],
+            #     # extra_arguments=[{'use_intra_process_comms': True}],
+            # ),
         ],
         output='screen',
     )

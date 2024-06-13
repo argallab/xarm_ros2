@@ -11,6 +11,7 @@
       </joint>
     </xacro:unless>
 
+    <!-- THIS ONE SEEMS TO WORK OKAY -->
     <link name="${prefix}xarm_gripper_base_link">
       <inertial>
         <origin xyz="-0.00065489 -0.0018497 0.048028" rpy="0 0 0" />
@@ -29,6 +30,8 @@
         origin_xyz="0 0 0" 
         origin_rpy="0 0 0" />
     </link>
+
+
     <link name="${prefix}left_outer_knuckle">
       <inertial>
         <origin xyz="2.9948E-14 0.021559 0.015181" rpy="0 0 0" />
@@ -47,6 +50,7 @@
         origin_xyz="0 0 0" 
         origin_rpy="0 0 0" />
     </link>
+
     <joint name="${prefix}drive_joint" type="revolute">
       <origin xyz="0 0.035 0.059098" rpy="0 0 0" />
       <parent link="${prefix}xarm_gripper_base_link" />
@@ -54,6 +58,9 @@
       <axis xyz="1 0 0" />
       <limit lower="0" upper="0.85" effort="50" velocity="2" />
     </joint>
+
+
+
     <link name="${prefix}left_finger">
       <inertial>
         <origin xyz="-2.4536E-14 -0.016413 0.029258" rpy="0 0 0" />
@@ -72,6 +79,7 @@
         origin_xyz="0 0 0" 
         origin_rpy="0 0 0" />
     </link>
+
     <joint name="${prefix}left_finger_joint" type="revolute">
       <origin xyz="0 0.035465 0.042039" rpy="0 0 0" />
       <parent link="${prefix}left_outer_knuckle" />
@@ -80,6 +88,7 @@
       <limit lower="0" upper="0.85" effort="50" velocity="2" />
       <mimic joint="${prefix}drive_joint" multiplier="1" offset="0" />
     </joint>
+
     <link name="${prefix}left_inner_knuckle">
       <inertial>
         <origin xyz="1.86600784687907E-06 0.0220467847633621 0.0261334672830885" rpy="0 0 0" />
@@ -98,6 +107,7 @@
         origin_xyz="0 0 0" 
         origin_rpy="0 0 0" />
     </link>
+
     <joint name="${prefix}left_inner_knuckle_joint" type="revolute">
       <origin xyz="0 0.02 0.074098" rpy="0 0 0" />
       <parent link="${prefix}xarm_gripper_base_link" />
@@ -106,6 +116,7 @@
       <limit lower="0" upper="0.85" effort="50" velocity="2" />
       <mimic joint="${prefix}drive_joint" multiplier="1" offset="0" />
     </joint>
+    
     <link name="${prefix}right_outer_knuckle">
       <inertial>
         <origin xyz="-3.1669E-14 -0.021559 0.015181" rpy="0 0 0" />
