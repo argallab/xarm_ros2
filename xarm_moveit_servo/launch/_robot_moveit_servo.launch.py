@@ -34,6 +34,7 @@ def launch_setup(context, *args, **kwargs):
     add_vacuum_gripper = LaunchConfiguration('add_vacuum_gripper', default=False)
     add_bio_gripper = LaunchConfiguration('add_bio_gripper', default=False)
     ros2_control_plugin = LaunchConfiguration('ros2_control_plugin', default='uf_robot_hardware/UFRobotFakeSystemHardware')
+    controllers_name = LaunchConfiguration('controllers_name', default='/joint_trajectory_controller/JointTrajectoryController')
     
     # 1: xbox360 wired
     # 2: xbox360 wireless
@@ -71,7 +72,7 @@ def launch_setup(context, *args, **kwargs):
     get_xarm_robot_description_parameters = getattr(mod, 'get_xarm_robot_description_parameters')
     robot_description_parameters = get_xarm_robot_description_parameters(
         xacro_urdf_file=PathJoinSubstitution([FindPackageShare('xarm_description'), 'urdf', 'xarm_device.urdf.xacro']),
-        xacro_srdf_file=PathJoinSubstitution([FindPackageShare('xarm_moveit_config'), 'srdf', 'xarm.srdf.xacro']),
+        # xacro_srdf_file=PathJoinSubstitution([FindPackageShare('xarm_moveit_config'), 'srdf', 'xarm.srdf.xacro']),
         urdf_arguments={
             'prefix': prefix,
             'hw_ns': hw_ns.perform(context).strip('/'),
@@ -122,10 +123,33 @@ def launch_setup(context, *args, **kwargs):
     servo_yaml['command_out_topic'] = '/{}/joint_trajectory'.format(xarm_traj_controller)
     servo_params = {"moveit_servo": servo_yaml}
     controllers = ['joint_state_broadcaster', xarm_traj_controller]
-    if add_gripper.perform(context) in ('True', 'true') and robot_type.perform(context) != 'lite':
-        controllers.append('{}{}_gripper_traj_controller'.format(prefix.perform(context), robot_type.perform(context)))
-    elif add_bio_gripper.perform(context) in ('True', 'true') and robot_type.perform(context) != 'lite':
-        controllers.append('{}bio_gripper_traj_controller'.format(prefix.perform(context)))
+
+    controllers_yaml = load_yaml(moveit_config_package_name, 'config', xarm_type, '{}.yaml'.format(controllers_name.perform(context)))
+    kinematics_yaml = robot_description_parameters['robot_description_kinematics']
+    joint_limits_yaml = robot_description_parameters.get('robot_description_planning', None)
+    # if add_gripper.perform(context) in ('True', 'true') and robot_type.perform(context) != 'lite':
+    #     controllers.append('{}{}_gripper_traj_controller'.format(prefix.perform(context), robot_type.perform(context)))
+    # elif add_bio_gripper.perform(context) in ('True', 'true') and robot_type.perform(context) != 'lite':
+    #     controllers.append('{}bio_gripper_traj_controller'.format(prefix.perform(context)))
+    if add_gripper.perform(context) in ('True', 'true'):
+        gripper_controllers_yaml = load_yaml(moveit_config_package_name, 'config', '{}_gripper'.format(robot_type.perform(context)), '{}.yaml'.format(controllers_name.perform(context)))
+        gripper_ompl_planning_yaml = load_yaml(moveit_config_package_name, 'config', '{}_gripper'.format(robot_type.perform(context)), 'ompl_planning.yaml')
+        gripper_joint_limits_yaml = load_yaml(moveit_config_package_name, 'config', '{}_gripper'.format(robot_type.perform(context)), 'joint_limits.yaml')
+
+        if gripper_controllers_yaml and 'controller_names' in gripper_controllers_yaml:
+            for name in gripper_controllers_yaml['controller_names']:
+                if name in gripper_controllers_yaml:
+                    if name not in controllers_yaml['controller_names']:
+                        controllers_yaml['controller_names'].append(name)
+                    controllers_yaml[name] = gripper_controllers_yaml[name]
+        if joint_limits_yaml and gripper_joint_limits_yaml:
+            joint_limits_yaml['joint_limits'].update(gripper_joint_limits_yaml['joint_limits'])
+
+    add_prefix_to_moveit_params = getattr(mod, 'add_prefix_to_moveit_params')
+    add_prefix_to_moveit_params(
+        controllers_yaml=controllers_yaml, 
+        kinematics_yaml=kinematics_yaml, joint_limits_yaml=joint_limits_yaml, 
+        prefix=prefix.perform(context))
 
     # rviz_config_file = PathJoinSubstitution([FindPackageShare(moveit_config_package_name), 'rviz', 'moveit.rviz'])
     rviz_config_file = PathJoinSubstitution([FindPackageShare('xarm_moveit_servo'), 'rviz', 'servo.rviz'])
