@@ -30,8 +30,10 @@ def load_file(package_name, *file_path):
 def load_yaml(package_name, *file_path):
     package_path = get_package_share_directory(package_name)
     absolute_file_path = os.path.join(package_path, *file_path)
+    print(f"\n\n\npackage_path: {package_path}")
+    print(f"abs file path: {absolute_file_path}\n\n\n")
     if not os.path.exists(absolute_file_path):
-        return {}
+        return NotImplementedError
     try:
         with open(absolute_file_path, 'r') as file:
             return yaml.safe_load(file)
