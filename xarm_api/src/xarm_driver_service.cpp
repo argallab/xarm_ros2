@@ -159,7 +159,7 @@ namespace xarm_api
         
         // MoveHome
         service_move_gohome_ = _create_service<xarm_msgs::srv::MoveHome>("move_gohome", &XArmDriver::_move_gohome);
-        
+
         // MoveVelocity
         service_vc_set_joint_velocity_ = _create_service<xarm_msgs::srv::MoveVelocity>("vc_set_joint_velocity", &XArmDriver::_vc_set_joint_velocity);
         service_vc_set_cartesian_velocity_ = _create_service<xarm_msgs::srv::MoveVelocity>("vc_set_cartesian_velocity", &XArmDriver::_vc_set_cartesian_velocity);
