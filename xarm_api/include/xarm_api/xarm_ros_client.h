@@ -81,6 +81,7 @@ public:
 	int set_self_collision_detection(bool on);
 	int set_simulation_robot(bool on);
 	int set_baud_checkset_enable(bool enable);
+	// int set_allow_approx_motion(bool allow);
 
 	// SetInt16ById
 	int motion_enable(bool enable, int servo_id = 8);
@@ -281,6 +282,7 @@ private:
 	rclcpp::Client<xarm_msgs::srv::SetInt16>::SharedPtr client_set_self_collision_detection_;
 	rclcpp::Client<xarm_msgs::srv::SetInt16>::SharedPtr client_set_simulation_robot_;
 	rclcpp::Client<xarm_msgs::srv::SetInt16>::SharedPtr client_set_baud_checkset_enable_;
+	// rclcpp::Client<xarm_msgs::srv::SetInt16>::SharedPtr client_set_allow_approx_motion_; // added 7/12/2024
 	
 	// SetInt16ById
 	std::shared_ptr<xarm_msgs::srv::SetInt16ById::Request> req_set_int16_by_id_;

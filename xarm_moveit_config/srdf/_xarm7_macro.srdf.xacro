@@ -49,6 +49,15 @@
       <joint name="${prefix}joint6" value="0" />
       <joint name="${prefix}joint7" value="0" />
     </group_state>
+    <group_state name="hold-up" group="${prefix}xarm7">
+      <joint name="${prefix}joint1" value="0" />
+      <joint name="${prefix}joint2" value="0" />
+      <joint name="${prefix}joint3" value="0" />
+      <joint name="${prefix}joint4" value="0" />
+      <joint name="${prefix}joint5" value="0" />
+      <joint name="${prefix}joint6" value="-1.5708" />
+      <joint name="${prefix}joint7" value="0" />
+    </group_state>
     <group_state name="r01-home" group="${prefix}xarm7">
       <joint name="${prefix}joint1" value="0.00174533" />
       <joint name="${prefix}joint2" value="0.280998" />
@@ -58,16 +67,52 @@
       <joint name="${prefix}joint6" value="-1.279326" />
       <joint name="${prefix}joint7" value="0.00349066" />
     </group_state>
-    <group_state name="hold-up" group="${prefix}xarm7">
-      <joint name="${prefix}joint1" value="0.1" />
-      <joint name="${prefix}joint2" value="0" />
-      <joint name="${prefix}joint3" value="0" />
-      <joint name="${prefix}joint4" value="0" />
-      <joint name="${prefix}joint5" value="0" />
-      <joint name="${prefix}joint6" value="-1.5708" />
-      <joint name="${prefix}joint7" value="0" />
+    <!-- <group_state name="top_1" group="${prefix}xarm7">
+      <joint name="${prefix}joint1" value="-0.006557767745107412" />
+      <joint name="${prefix}joint2" value="-0.40569958090782166" />
+      <joint name="${prefix}joint3" value="-0.08301904052495956" />
+      <joint name="${prefix}joint4" value="1.3033103942871094" />
+      <joint name="${prefix}joint5" value="-0.016944734379649162" />
+      <joint name="${prefix}joint6" value="0.07024673372507095" />
+      <joint name="${prefix}joint7" value="0.0035645877942442894" />
+    </group_state> -->
+    <!-- <group_state name="top_2" group="${prefix}xarm7">
+      <joint name="${prefix}joint1" value="0.49884864687919617" />
+      <joint name="${prefix}joint2" value="2.9346048831939697" />
+      <joint name="${prefix}joint3" value="-0.22892746329307556" />
+      <joint name="${prefix}joint4" value="0.18529145419597626" />
+      <joint name="${prefix}joint5" value="-3.0823981761932373" />
+      <joint name="${prefix}joint6" value="1.2570991516113281" />
+      <joint name="${prefix}joint7" value="-2.953726053237915" />
+    </group_state> -->
+    <group_state name="left" group="${prefix}xarm7">
+      <joint name="${prefix}joint1" value="-1.0834697484970093" />
+      <joint name="${prefix}joint2" value="1.191170573234558" />
+      <joint name="${prefix}joint3" value="1.7879332304000854" />
+      <joint name="${prefix}joint4" value="1.1186823844909668" />
+      <joint name="${prefix}joint5" value="0.41214996576309204" />
+      <joint name="${prefix}joint6" value="0.3224063217639923" />
+      <joint name="${prefix}joint7" value="-1.5922279357910156" />
     </group_state>
-
+    <group_state name="right" group="${prefix}xarm7">
+      <joint name="${prefix}joint1" value="-2.658672571182251" />
+      <joint name="${prefix}joint2" value="-1.1861276626586914" />
+      <joint name="${prefix}joint3" value="1.3400242328643799" />
+      <joint name="${prefix}joint4" value="1.191893458366394" />
+      <joint name="${prefix}joint5" value="-0.4704374074935913" />
+      <joint name="${prefix}joint6" value="-0.25592169165611267" />
+      <joint name="${prefix}joint7" value="-1.5145221948623657" />
+    </group_state>
+    <group_state name="central" group="${prefix}xarm7">
+      <joint name="${prefix}joint1" value="-0.21728189289569855" />
+      <joint name="${prefix}joint2" value="-0.6305210590362549" />
+      <joint name="${prefix}joint3" value="0.25925546884536743" />
+      <joint name="${prefix}joint4" value="0.8365506529808044" />
+      <joint name="${prefix}joint5" value="0.04151972755789757" />
+      <joint name="${prefix}joint6" value="-0.1335403472185135" />
+      <joint name="${prefix}joint7" value="0.11424840241670609" />
+    </group_state>
+    
     <!-- gripper -->
     <xacro:if value="${add_gripper}">
       <group name="${prefix}xarm_gripper">

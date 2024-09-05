@@ -114,6 +114,7 @@ def launch_setup(context, *args, **kwargs):
                 'report_type': report_type,
                 'baud_checkset': baud_checkset,
                 'default_gripper_baud': default_gripper_baud,
+                # 'set_allow_approx_motion': 'True' #True, # added 7/12/2024
             }
         )
     }
@@ -125,6 +126,8 @@ def launch_setup(context, *args, **kwargs):
         os.path.join(get_package_share_directory('xarm_api'), 'config', 'xarm_user_params.yaml'),
         LaunchConfiguration('ros_namespace', default='').perform(context), node_name='ufactory_driver'
     )
+    # Add the set_allow_approx_motion parameter to robot_params
+    # robot_params['set_allow_approx_motion'] = True # added 7/12/2024
 
     # ros2 control node
     ros2_control_node = Node(

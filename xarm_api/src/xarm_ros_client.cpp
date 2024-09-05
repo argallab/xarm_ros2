@@ -195,6 +195,8 @@ void XArmROSClient::init(rclcpp::Node::SharedPtr& node, std::string hw_ns)
     client_load_trajectory_ = _create_client<xarm_msgs::srv::TrajCtrl>("load_trajectory");
     
     client_playback_trajectory_ = _create_client<xarm_msgs::srv::TrajPlay>("playback_trajectory");
+
+    // client_set_allow_approx_motion_ = _create_client<xarm_msgs::srv::SetInt16>("set_allow_approx_motion"); // added 7/12/2024
 }
 
 template<typename ServiceT>
@@ -448,6 +450,29 @@ int XArmROSClient::set_baud_checkset_enable(bool enable)
     req_set_int16_->data = (int)enable;
     return _call_request(client_set_baud_checkset_enable_, req_set_int16_);
 }
+
+// added 7/12/2024
+// int XArmROSClient::set_allow_approx_motion(bool allow) {
+//     req_set_int16_->data = (int)allow;
+//     return _call_request(client_set_allow_approx_motion_, req_set_int16_);
+// }
+// int XArmROSClient::set_allow_approx_motion(bool allow)
+//     {
+//         // Implement the function logic here
+//         auto request = std::make_shared<xarm_msgs::srv::SetInt16::Request>();
+//         request->data = static_cast<int16_t>(allow);
+
+//         auto result = client_set_allow_approx_motion_->async_send_request(request);
+//         // if (rclcpp::spin_until_future_complete(this->get_node_base_interface(), result) == rclcpp::FutureReturnCode::SUCCESS)
+//         // {
+//         //     return result.get()->success;
+//         // }
+//         // else
+//         // {
+//         //     RCLCPP_ERROR(this->get_logger(), "Failed to call service set_allow_approx_motion");
+//         //     return -1;
+//         // }
+//     }
 
 // SetInt16ById
 int XArmROSClient::motion_enable(bool enable, int servo_id)
@@ -1148,6 +1173,7 @@ int XArmROSClient::playback_trajectory(int times, bool wait, int double_speed, s
     req_traj_play_->double_speed = double_speed;
     return _call_request(client_playback_trajectory_, req_traj_play_);
 }
+
 
 
 }
